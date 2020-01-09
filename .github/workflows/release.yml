@@ -23,8 +23,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
+          tag_name: ${{ github.action }}
+          release_name: Release ${{ github.action }}
           draft: false
           prerelease: false
 
@@ -91,7 +91,7 @@ jobs:
           fi
           echo ::set-output name=output_file_name::${file_name}
         env:
-          TAG_REF_NAME: ${{ github.sha }}
+          TAG_REF_NAME: ${{ github.action }}
 
       - name: Loading file with release URL #created in release job
         uses: actions/download-artifact@v1
@@ -105,7 +105,7 @@ jobs:
           url_value=$(cat release_url/release_url.txt)
           echo ::set-output name=upload_url::$url_value
         env:
-          TAG_REF_NAME: ${{ github.sha }}
+          TAG_REF_NAME: ${{ github.action }}
 
       - name: Uploading release asset
         id: upload-release-asset
