@@ -46,8 +46,6 @@ jobs:
   #and transfer release assets through upload/download artifact scripts
   build:
     
-    if: contains(github.ref, 'tags/v')
-    needs: [release]
     name: CMake build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
