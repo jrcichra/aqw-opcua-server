@@ -23,7 +23,8 @@ static void stopHandler(int sig)
 {
   UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "received signal %d", sig);
   running = false;
-  if(1);
+  if (1)
+    ;
 }
 
 namespace weatherserver
@@ -600,7 +601,7 @@ void requestCountries(UA_Server *server, const UA_NodeId &rootNodeId)
   {
     // webService->fetchAllCountries().then([&](web::json::value response) {
     //   webService->setAllCountries(CountryData::parseJsonArray(response));
-    //   auto& countries = webService->getAllCountries();
+    std::map<std::string, CountryData> &countries; // = webService->getAllCountries();
 
     // Add countries from configuration file if it does not exist in the list:
     int numberOfAddedCountries = 0;
@@ -697,12 +698,11 @@ void requestCountries(UA_Server *server, const UA_NodeId &rootNodeId)
 
       country.setIsInitialized(true);
     }
-  }).wait();
-}
-catch (const std::exception &e)
-{ //TODO - catch more specific type of exception
-  UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_NETWORK, "Error on requestCountries method: [%s]", e.what());
-}
+  }
+  catch (const std::exception &e)
+  { //TODO - catch more specific type of exception
+    UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_NETWORK, "Error on requestCountries method: [%s]", e.what());
+  }
 } // namespace weatherserver
 
 /*
@@ -851,7 +851,7 @@ const UA_Node *customGetNode(void *nodestoreContext, const UA_NodeId *nodeId)
   }
   return defaultGetNode(nodestoreContext, nodeId);
 }
-}
+} // namespace weatherserver
 
 int main(int argc, char *argv[])
 {
