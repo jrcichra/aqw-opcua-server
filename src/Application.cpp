@@ -617,6 +617,7 @@ void requestCountries(UA_Server *server, const UA_NodeId &rootNodeId)
     if (numberOfAddedCountries > 0)
     {
       std::cout << "Added " << numberOfAddedCountries << " from configuration file" << std::endl;
+      webService->setAllCountries(countries);
     }
     for (auto itCountry = countries.begin(); itCountry != countries.end(); itCountry++)
     {
