@@ -602,7 +602,7 @@ void requestCountries(UA_Server *server, const UA_NodeId &rootNodeId)
     // webService->fetchAllCountries().then([&](web::json::value response) {
     //   webService->setAllCountries(CountryData::parseJsonArray(response));
     std::map<std::string, CountryData> countries_real; // = webService->getAllCountries();
-    auto &countries = &countries_real;
+    auto countries = &countries_real;
     // Add countries from configuration file if it does not exist in the list:
     int numberOfAddedCountries = 0;
     auto countriesFromSettings = settings->getCountries();
