@@ -2,59 +2,55 @@ name: C/C++ CI (release)
 
 on:
   push:
-    branches: 
+    branches:
       - master
   pull_request:
     branches:
       - master
 
 jobs:
-
   #workaround to avoid multiple release creations at build stage
   #using separate job and saving output URL to a file
   #we assume builds going to be successful (should be ok with build.yml trigger on push/pr to master)
   release:
-
-    if: contains(github.ref, 'tags/v')
     name: Creating GitHub release
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Creating release
-      id: create-release
-      uses: actions/create-release@v1.0.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
 
-    - name: Output release URL to file
-      shell: bash
-      run: echo "${{ steps.create-release.outputs.upload_url }}" > release_url.txt
-      
-    - name: Save release URL for later use
-      uses: actions/upload-artifact@v1
-      with:
-        name: release_url
-        path: release_url.txt
+    steps:
+      - name: Creating release
+        id: create-release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Output release URL to file
+        shell: bash
+        run: echo "${{ steps.create-release.outputs.upload_url }}" > release_url.txt
+
+      - name: Save release URL for later use
+        uses: actions/upload-artifact@v1
+        with:
+          name: release_url
+          path: release_url.txt
 
   #TODO: order should be: build > release > publish
   #may work out if we split build and publish parts
   #and transfer release assets through upload/download artifact scripts
   build:
-    
     name: CMake build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
-    
+
     steps:
       - uses: actions/checkout@v1
-        
+
       - name: Installing cpprestsdk
         shell: bash
         run: |
@@ -63,7 +59,7 @@ jobs:
           else
             vcpkg install cpprestsdk
           fi
-          
+
       - name: Building with CMake
         shell: bash
         run: |
@@ -77,7 +73,7 @@ jobs:
             cmake $VCPKG_ARG -DCMAKE_BUILD_TYPE=Release ..
             cmake --build .
           fi
-          
+
       - name: Creating release asset
         id: create-asset
         shell: bash
@@ -96,12 +92,12 @@ jobs:
           echo ::set-output name=output_file_name::${file_name}
         env:
           TAG_REF_NAME: ${{ github.ref }}
-         
+
       - name: Loading file with release URL #created in release job
         uses: actions/download-artifact@v1
         with:
           name: release_url
-          
+
       - name: Extracting URL
         id: get-url
         shell: bash
@@ -110,7 +106,7 @@ jobs:
           echo ::set-output name=upload_url::$url_value
         env:
           TAG_REF_NAME: ${{ github.ref }}
-        
+
       - name: Uploading release asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1.0.1
