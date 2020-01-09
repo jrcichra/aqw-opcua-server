@@ -493,7 +493,7 @@ static bool validateLocationsNumberInTheModel(UA_Server &server, const CountryDa
   */
 static void buildLocations(UA_Server *server, CountryData &country, const UA_NodeId &parentCountryNodeId)
 {
-
+  std::cout << "In buildLocations" << std::endl;
   uint32_t currentLocationsNumber = country.getLocationsNumber();
 
   web::json::value response = webService->fetchAllLocations(country.getCode(), currentLocationsNumber);
