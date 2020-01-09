@@ -15,6 +15,8 @@ jobs:
   release:
     name: Creating GitHub release
     runs-on: ubuntu-latest
+    env:
+      SHA8: ${GITHUB_SHA::8}
 
     steps:
       - name: Creating release
@@ -23,8 +25,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
+          tag_name: $SHA8
+          release_name: Release $SHA8
           draft: false
           prerelease: false
 
@@ -91,7 +93,7 @@ jobs:
           fi
           echo ::set-output name=output_file_name::${file_name}
         env:
-          TAG_REF_NAME: ${{ github.sha }}
+          TAG_REF_NAME: $SHA8
 
       - name: Loading file with release URL #created in release job
         uses: actions/download-artifact@v1
@@ -105,7 +107,7 @@ jobs:
           url_value=$(cat release_url/release_url.txt)
           echo ::set-output name=upload_url::$url_value
         env:
-          TAG_REF_NAME: ${{ github.sha }}
+          TAG_REF_NAME: $SHA8
 
       - name: Uploading release asset
         id: upload-release-asset
