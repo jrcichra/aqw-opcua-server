@@ -560,21 +560,21 @@ namespace weatherserver {
   */
   void requestCountries(UA_Server* server, const UA_NodeId& rootNodeId) {
     try {
-      webService->fetchAllCountries().then([&](web::json::value response) {
-        webService->setAllCountries(CountryData::parseJsonArray(response));
-        auto& countries = webService->getAllCountries();
+      // webService->fetchAllCountries().then([&](web::json::value response) {
+      //   webService->setAllCountries(CountryData::parseJsonArray(response));
+      //   auto& countries = webService->getAllCountries();
 
         // Add countries from configuration file if it does not exist in the list:
         int numberOfAddedCountries = 0;
         auto countriesFromSettings= settings->getCountries();
         for (auto iter = countriesFromSettings.begin(); iter != countriesFromSettings.end(); iter++)
         {
-          auto existingEntry = countries.find(iter->first);
-          if (existingEntry == countries.end())
-          {
+          // auto existingEntry = countries.find(iter->first);
+          // if (existingEntry == countries.end())
+          // {
             countries[iter->first] = iter->second;
             numberOfAddedCountries++;
-          }
+          // }
         }
         if (numberOfAddedCountries > 0)
         {
