@@ -496,19 +496,19 @@ static void buildLocations(UA_Server *server, CountryData &country, const UA_Nod
   std::cout << "In buildLocations" << std::endl;
   uint32_t currentLocationsNumber = country.getLocationsNumber();
 
-  web::json::value response = webService->fetchAllLocations(country.getCode(), currentLocationsNumber);
-  auto locations = LocationData::parseJsonArray(response);
+  //web::json::value response = webService->fetchAllLocations(country.getCode(), currentLocationsNumber);
+   std::map<std::string, LocationData> locations;
 
   // Add location from configuration file:
   int numberOfAddedLocations = 0;
   auto configuredLocations = settings->getLocations(country.getCode());
   for (auto li = configuredLocations.begin(); li != configuredLocations.end(); li++)
   {
-    if (locations.find(li->first) == locations.end())
-    {
+    //if (locations.find(li->first) == locations.end())
+    //{
       locations[li->first] = li->second;
       numberOfAddedLocations++;
-    }
+    //}
   }
 
   if (numberOfAddedLocations > 0)
