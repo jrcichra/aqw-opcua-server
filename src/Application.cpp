@@ -786,12 +786,12 @@ const UA_Node *customGetNode(void *nodestoreContext, const UA_NodeId *nodeId)
 
           if (1)
           {
-            if (country.getLocations().size() >= 1)
+//             if (country.getLocations().size() >= 1)
 
               buildLocations(webService->getServer(), country, countryObjId);
 
             // Only try to download weather data if locations has been added to the country being read.
-            if (country.getLocations().size() >= 1)
+//             if (country.getLocations().size() >= 1)
             {
               /*
                 If find the dot after beginning of location's name, it MAY mean the client is requesting to read a specific location or it just mean the location name has a '.' WITHIN the name.
