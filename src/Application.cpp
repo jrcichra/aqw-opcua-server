@@ -784,7 +784,7 @@ const UA_Node *customGetNode(void *nodestoreContext, const UA_NodeId *nodeId)
           // Only download locations if they don't exist and the country has been initialized (added to the address space).
                     std::cout << "We want to process a node and its country.getIsInitalized() is " << country.getIsInitialized() << std::endl;
 
-          if (country.getIsInitialized())
+          if (1)
           {
             if (country.getLocations().size() <= 1)
               buildLocations(webService->getServer(), country, countryObjId);
