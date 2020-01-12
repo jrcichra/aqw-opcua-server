@@ -493,7 +493,6 @@ static bool validateLocationsNumberInTheModel(UA_Server &server, const CountryDa
   */
 static void buildLocations(UA_Server *server, CountryData &country, const UA_NodeId &parentCountryNodeId)
 {
-  std::cout << "In buildLocations" << std::endl;
   uint32_t currentLocationsNumber = country.getLocationsNumber();
 
   //web::json::value response = webService->fetchAllLocations(country.getCode(), currentLocationsNumber);
@@ -782,8 +781,7 @@ const UA_Node *customGetNode(void *nodestoreContext, const UA_NodeId *nodeId)
           auto &country = itCountry->second;
 
           // Only download locations if they don't exist and the country has been initialized (added to the address space).
-                    std::cout << "We want to process a node and its country.getIsInitalized() is " << country.getIsInitialized() << std::endl;
-
+          
           if (1)
           {
             if (country.getLocations().size() == 0)
