@@ -2,6 +2,9 @@
 
 ## Description
 
+(This fork bypasses the complete download of darksky location data. Any data you want from darksky needs to be specified in your settings.json file)
+
+
 A demo OPC UA server application, **currently in development**, that fetches weather information, such as temperature, pressure, humidity, wind speed etc, from web services online through REST calls. Responses are returned in [JSON](http://json.org/) format and are processed by the application. The demo server outputs all requested information in accordance with OPC UA communication protocol.
 
 ## Libraries/APIs required
