@@ -65,8 +65,8 @@ static void updateWeatherVariable(UA_DataValue &dataValue, const WeatherData &we
   }
   else if (weatherVariableName == WeatherData::BROWSE_TEMPERATURE)
   {
-    UA_Double temperatureValue = weatherData.getCurrentlyTemperature();
-    UA_Variant_setScalarCopy(&dataValue.value, &temperatureValue, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_UInt16 temperatureValue = weatherData.getCurrentlyTemperature();
+    UA_Variant_setScalarCopy(&dataValue.value, &temperatureValue, &UA_TYPES[UA_TYPES_UINT16]);
     dataValue.hasValue = true;
   }
   else if (weatherVariableName == WeatherData::BROWSE_APPARENT_TEMPERATURE)
